@@ -10,5 +10,12 @@ class Main {
 
         int[][] testArray2 = new int[][] {{3,2},{-2,2}};
         System.out.println(StepsCounter.execute(testArray2));
+
+        int[][] testArray3 = new int[][] {{3,33}};
+        System.out.println(StepsCounter.execute(testArray3));
+
+        System.out.println(StepsCounter.execute(null));
+
+
     }
 }
