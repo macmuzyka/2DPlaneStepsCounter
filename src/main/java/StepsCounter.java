@@ -11,9 +11,12 @@
 
 class StepsCounter {
     static int execute(int[][] points) {
+        if (points == null || points.length == 1) {
+            return -1;
+        }
 
-        int xPointCoordinate = 0;
-        int yPointCoordinate = 1;
+        int x = 0; // representing x value of given point coordinate [x, y] -> [0, 1]
+        int y = 1; // representing y value as in example above
 
         int totalPoints = points.length;
         int lastPointIndex = points.length - 1;
@@ -26,72 +29,72 @@ class StepsCounter {
 
         while (pointsVisited <= totalPoints) {
 
-            if (operatingPoint[xPointCoordinate] < points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] < points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] < points[nextPoint][x] &&
+                    operatingPoint[y] < points[nextPoint][y]) {
                 moveDiagonally_UpAndRight(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[xPointCoordinate] > points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] < points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] > points[nextPoint][x] &&
+                    operatingPoint[y] < points[nextPoint][y]) {
                 moveDiagonally_UpAndLeft(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[xPointCoordinate] < points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] > points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] < points[nextPoint][x] &&
+                    operatingPoint[y] > points[nextPoint][y]) {
                 moveDiagonally_DownAndRight(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[xPointCoordinate] > points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] > points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] > points[nextPoint][x] &&
+                    operatingPoint[y] > points[nextPoint][y]) {
                 moveDiagonally_DownAndLeft(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[xPointCoordinate] > points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] == points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] > points[nextPoint][x] &&
+                    operatingPoint[y] == points[nextPoint][y]) {
                 move_Left(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[xPointCoordinate] < points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] == points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] < points[nextPoint][x] &&
+                    operatingPoint[y] == points[nextPoint][y]) {
                 move_Right(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[xPointCoordinate] == points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] < points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] == points[nextPoint][x] &&
+                    operatingPoint[y] < points[nextPoint][y]) {
                 move_Up(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[xPointCoordinate] == points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] > points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] == points[nextPoint][x] &&
+                    operatingPoint[y] > points[nextPoint][y]) {
                 move_Down(operatingPoint);
                 printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             // condition for reaching last from from given array
-            if (operatingPoint[xPointCoordinate] == points[lastPointIndex][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] == points[lastPointIndex][yPointCoordinate]) {
+            if (operatingPoint[x] == points[lastPointIndex][x] &&
+                    operatingPoint[y] == points[lastPointIndex][y]) {
                 reachingLastPointMessage();
                 return steps;
             }
 
             // condition if point from array is met
-            if (operatingPoint[xPointCoordinate] == points[nextPoint][xPointCoordinate] &&
-                    operatingPoint[yPointCoordinate] == points[nextPoint][yPointCoordinate]) {
+            if (operatingPoint[x] == points[nextPoint][x] &&
+                    operatingPoint[y] == points[nextPoint][y]) {
                 pointsVisited++;
                 nextPoint++;
                 reachingPointMessage();
