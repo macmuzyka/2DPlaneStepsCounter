@@ -10,13 +10,15 @@
  */
 
 class StepsCounter {
+    private static int x = 0; // representing x value of given point coordinate [x, y] -> [0, 1]
+    private static int y = 1; // representing y value as in example above
+
     static int execute(int[][] points) {
         if (points == null || points.length == 1) {
             return -1;
         }
 
-        int x = 0; // representing x value of given point coordinate [x, y] -> [0, 1]
-        int y = 1; // representing y value as in example above
+
 
         int totalPoints = points.length;
         int lastPointIndex = points.length - 1;
@@ -32,63 +34,55 @@ class StepsCounter {
             if (operatingPoint[x] < points[nextPoint][x] &&
                     operatingPoint[y] < points[nextPoint][y]) {
                 moveDiagonally_UpAndRight(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             if (operatingPoint[x] > points[nextPoint][x] &&
                     operatingPoint[y] < points[nextPoint][y]) {
                 moveDiagonally_UpAndLeft(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             if (operatingPoint[x] < points[nextPoint][x] &&
                     operatingPoint[y] > points[nextPoint][y]) {
                 moveDiagonally_DownAndRight(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             if (operatingPoint[x] > points[nextPoint][x] &&
                     operatingPoint[y] > points[nextPoint][y]) {
                 moveDiagonally_DownAndLeft(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             if (operatingPoint[x] > points[nextPoint][x] &&
                     operatingPoint[y] == points[nextPoint][y]) {
                 move_Left(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             if (operatingPoint[x] < points[nextPoint][x] &&
                     operatingPoint[y] == points[nextPoint][y]) {
                 move_Right(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             if (operatingPoint[x] == points[nextPoint][x] &&
                     operatingPoint[y] < points[nextPoint][y]) {
                 move_Up(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             if (operatingPoint[x] == points[nextPoint][x] &&
                     operatingPoint[y] > points[nextPoint][y]) {
                 move_Down(operatingPoint);
-                printingCurrentPoint(operatingPoint);
                 steps++;
             }
 
             // condition for reaching last from from given array
             if (operatingPoint[x] == points[lastPointIndex][x] &&
                     operatingPoint[y] == points[lastPointIndex][y]) {
-                reachingLastPointMessage();
+                lastPointReachedMessage();
                 return steps;
             }
 
@@ -97,59 +91,67 @@ class StepsCounter {
                     operatingPoint[y] == points[nextPoint][y]) {
                 pointsVisited++;
                 nextPoint++;
-                reachingPointMessage();
+                pointReacedMessage();
             }
         }
 
         return steps;
     }
 
-    private static void reachingLastPointMessage() {
+    private static void lastPointReachedMessage() {
         System.out.println("Last point reached!");
     }
 
-    private static void reachingPointMessage() {
+    private static void pointReacedMessage() {
         System.out.println("Point from array reached!");
     }
 
-    private static void printingCurrentPoint(final int[] operatingPoint) {
+    private static void printCurrentPoint(final int[] operatingPoint) {
         System.out.println("Operating point: x = " + operatingPoint[0] + " y = " + operatingPoint[1]);
     }
 
-    private static void move_Up(int[] pointToBeChanged) {
-        pointToBeChanged[1]++;
+    private static void move_Up(int[] point) {
+        point[y]++;
+        printCurrentPoint(point);
     }
 
-    private static void move_Down(int[] pointToBeChanged) {
-        pointToBeChanged[1]--;
+    private static void move_Down(int[] point) {
+        point[y]--;
+        printCurrentPoint(point);
     }
 
-    private static void move_Right(int[] pointToBeChanged) {
-        pointToBeChanged[0]++;
+    private static void move_Right(int[] point) {
+        point[x]++;
+        printCurrentPoint(point);
     }
 
-    private static void move_Left(int[] pointToBeChanged) {
-        pointToBeChanged[0]--;
+    private static void move_Left(int[] point) {
+        point[x]--;
+        printCurrentPoint(point);
     }
 
-    private static void moveDiagonally_DownAndLeft(int[] pointToBeChanged) {
-        pointToBeChanged[0]--;
-        pointToBeChanged[1]--;
+    private static void moveDiagonally_DownAndLeft(int[] point) {
+        point[x]--;
+        point[y]--;
+        printCurrentPoint(point);
     }
 
-    private static void moveDiagonally_DownAndRight(int[] pointToBeChanged) {
-        pointToBeChanged[0]++;
-        pointToBeChanged[1]--;
+    private static void moveDiagonally_DownAndRight(int[] point) {
+        point[x]++;
+        point[y]--;
+        printCurrentPoint(point);
     }
 
-    private static void moveDiagonally_UpAndRight(int[] pointToBeChanged) {
-        pointToBeChanged[0]++;
-        pointToBeChanged[1]++;
+    private static void moveDiagonally_UpAndRight(int[] point) {
+        point[x]++;
+        point[y]++;
+        printCurrentPoint(point);
 
     }
 
-    private static void moveDiagonally_UpAndLeft(int[] pointToBeChanged) {
-        pointToBeChanged[0]--;
-        pointToBeChanged[1]++;
+    private static void moveDiagonally_UpAndLeft(int[] point) {
+        point[x]--;
+        point[y]++;
+        printCurrentPoint(point);
     }
 }
