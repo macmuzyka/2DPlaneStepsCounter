@@ -10,15 +10,13 @@
  */
 
 class StepsCounter {
-    private static int x = 0; // representing x value of given point coordinate [x, y] -> [0, 1]
-    private static int y = 1; // representing y value as in example above
+    private static final int x = 0; // representing x value of given point coordinate [x, y] -> [0, 1]
+    private static final int y = 1; // representing y value as in example above
 
     static int execute(int[][] points) {
         if (points == null || points.length == 1) {
             return -1;
         }
-
-
 
         int totalPoints = points.length;
         int lastPointIndex = points.length - 1;
@@ -30,79 +28,121 @@ class StepsCounter {
         int steps = 0;
 
         while (pointsVisited <= totalPoints) {
-
-            if (operatingPoint[x] < points[nextPoint][x] &&
-                    operatingPoint[y] < points[nextPoint][y]) {
+            if (possibleToMoveDiagonally_UpAndRight(points[nextPoint], operatingPoint)) {
                 moveDiagonally_UpAndRight(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[x] > points[nextPoint][x] &&
-                    operatingPoint[y] < points[nextPoint][y]) {
+            if (possibleToMoveDiagonally_UpAndLeft(points[nextPoint], operatingPoint)) {
                 moveDiagonally_UpAndLeft(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[x] < points[nextPoint][x] &&
-                    operatingPoint[y] > points[nextPoint][y]) {
+            if (possibleToMoveDiagonally_DownAndRight(points[nextPoint], operatingPoint)) {
                 moveDiagonally_DownAndRight(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[x] > points[nextPoint][x] &&
-                    operatingPoint[y] > points[nextPoint][y]) {
+            if (possibleToMoveDiagonally_DownAndLEft(points[nextPoint], operatingPoint)) {
                 moveDiagonally_DownAndLeft(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[x] > points[nextPoint][x] &&
-                    operatingPoint[y] == points[nextPoint][y]) {
+            if (possibleToMove_Left(points[nextPoint], operatingPoint)) {
                 move_Left(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[x] < points[nextPoint][x] &&
-                    operatingPoint[y] == points[nextPoint][y]) {
+            if (possibleToMove_Right(points[nextPoint], operatingPoint)) {
                 move_Right(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[x] == points[nextPoint][x] &&
-                    operatingPoint[y] < points[nextPoint][y]) {
+            if (possibleToMove_Up(points[nextPoint], operatingPoint)) {
                 move_Up(operatingPoint);
                 steps++;
             }
 
-            if (operatingPoint[x] == points[nextPoint][x] &&
-                    operatingPoint[y] > points[nextPoint][y]) {
+            if (possibleToMove_Down(points[nextPoint], operatingPoint)) {
                 move_Down(operatingPoint);
                 steps++;
             }
 
-            // condition for reaching last from from given array
-            if (operatingPoint[x] == points[lastPointIndex][x] &&
-                    operatingPoint[y] == points[lastPointIndex][y]) {
-                lastPointReachedMessage();
-                return steps;
-            }
+            if (pointFromArrayReached(operatingPoint, points[nextPoint])) {
+                if (lastPointReached(operatingPoint, points[lastPointIndex])) {
+                    lastPointReachedMessage();
+                    return steps;
+                }
 
-            // condition if point from array is met
-            if (operatingPoint[x] == points[nextPoint][x] &&
-                    operatingPoint[y] == points[nextPoint][y]) {
                 pointsVisited++;
                 nextPoint++;
-                pointReacedMessage();
+                pointReachedMessage();
             }
         }
 
         return steps;
     }
 
+    /**
+     * TODO: consider possibility to delegate all possible methods to separated for single responsibility,
+     * TODO: same goes for all move methods
+     */
+
+    private static boolean pointFromArrayReached(final int[] operatingPoint, final int[] point) {
+        return operatingPoint[x] == point[x] &&
+                operatingPoint[y] == point[y];
+    }
+
+    private static boolean lastPointReached(final int[] operatingPoint, final int[] point) {
+        return operatingPoint[x] == point[x] &&
+                operatingPoint[y] == point[y];
+    }
+
+    private static boolean possibleToMove_Down(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] == point[x] &&
+                operatingPoint[y] > point[y];
+    }
+
+    private static boolean possibleToMove_Up(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] == point[x] &&
+                operatingPoint[y] < point[y];
+    }
+
+    private static boolean possibleToMove_Right(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] < point[x] &&
+                operatingPoint[y] == point[y];
+    }
+
+    private static boolean possibleToMove_Left(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] > point[x] &&
+                operatingPoint[y] == point[y];
+    }
+
+    private static boolean possibleToMoveDiagonally_DownAndLEft(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] > point[x] &&
+                operatingPoint[y] > point[y];
+    }
+
+    private static boolean possibleToMoveDiagonally_DownAndRight(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] < point[x] &&
+                operatingPoint[y] > point[y];
+    }
+
+    private static boolean possibleToMoveDiagonally_UpAndLeft(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] > point[x] &&
+                operatingPoint[y] < point[y];
+    }
+
+    private static boolean possibleToMoveDiagonally_UpAndRight(final int[] point, final int[] operatingPoint) {
+        return operatingPoint[x] < point[x] &&
+                operatingPoint[y] < point[y];
+    }
+
     private static void lastPointReachedMessage() {
         System.out.println("Last point reached!");
     }
 
-    private static void pointReacedMessage() {
+    private static void pointReachedMessage() {
         System.out.println("Point from array reached!");
     }
 
